@@ -36,6 +36,7 @@ const CADENCE_OPTIONS: { id: OnboardingProfile['challengeCadence']; label: strin
 ];
 
 const OnboardingModal: React.FC<OnboardingModalProps> = ({ onComplete }) => {
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
   const [name, setName] = useState('');
   const [primaryGoal, setPrimaryGoal] = useState<OnboardingProfile['primaryGoal']>('discipline');
   const [focusArena, setFocusArena] = useState<ArenaType>('mind');
@@ -58,6 +59,60 @@ const OnboardingModal: React.FC<OnboardingModalProps> = ({ onComplete }) => {
     };
     onComplete(profile);
   };
+
+  if (showDisclaimer) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+        <div className="w-full max-w-4xl bg-secondary/90 border border-gray-700/70 rounded-3xl p-8 md:p-10 space-y-6 shadow-2xl overflow-y-auto max-h-[90vh]">
+          <header className="space-y-3">
+            <p className="text-xs uppercase tracking-[0.3em] text-accent">Important Notice</p>
+            <h1 className="text-2xl md:text-3xl font-extrabold text-text-primary">
+              Medical Disclaimer
+            </h1>
+          </header>
+
+          <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-2xl p-6 space-y-4">
+            <div className="space-y-4 text-sm text-text-primary leading-relaxed">
+              <p className="font-semibold text-yellow-400">
+                Atlas and its AI Mentor are not a substitute for professional medical advice, diagnosis, or treatment.
+              </p>
+
+              <p>
+                The information and guidance provided in this app are for informational and educational purposes only.
+                Always seek the advice of your physician, psychiatrist, psychologist, or other qualified health provider
+                with any questions you may have regarding a medical or mental health condition.
+              </p>
+
+              <p>
+                Never disregard professional medical advice or delay in seeking it because of something you have read
+                or discussed on this app.
+              </p>
+
+              <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 space-y-2">
+                <p className="font-semibold text-red-400">Crisis Support:</p>
+                <div className="text-xs space-y-1">
+                  <p><strong>Emergency:</strong> Call your doctor or 911 immediately</p>
+                  <p><strong>US/Canada Suicide Crisis:</strong> Call or text 988</p>
+                  <p><strong>UK Crisis Support:</strong> Call 111</p>
+                  <p><strong>India Crisis Support:</strong> Call 9152987821 (AASRA)</p>
+                  <p><strong>Singapore Crisis Support:</strong> Call 1-767 (SOS)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row gap-4 justify-end">
+            <button
+              onClick={() => setShowDisclaimer(false)}
+              className="px-8 py-3 bg-accent text-primary rounded-xl font-semibold hover:bg-accent/90 transition-colors"
+            >
+              I Understand & Agree
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
